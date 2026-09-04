@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Niels Bohr e a Revolução Atômica - Versão Completa</title>
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        background-color: #ffffff;
+        color: #0f172a;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Container Principal */
+    .slider-container {
+        width: 100%;
+        max-width: 960px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Slide 16:9 - Bordas Quadradas e Fundo Branco */
+    .slide {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #ffffff;
+        border: 3px solid #0f172a;
+        border-radius: 0px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        padding: 40px 48px;
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Exibe apenas o slide ativo no PC */
+    .slide.active {
+        display: flex;
+    }
+
+    /* Estilo da Capa */
+    .slide.cover {
+        background: #ffffff;
+        color: #0f172a;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border: 3px solid #0f172a;
+    }
+
+    .slide.cover h1 {
+        font-size: 3.2rem;
+        color: #0f172a;
+        margin-bottom: 20px;
+        font-weight: 800;
+        text-transform: uppercase;
+        line-height: 1.2;
+    }
+
+    .slide.cover h2 {
+        font-size: 1.8rem;
+        color: #475569;
+        font-weight: 700;
+        margin-bottom: 28px;
+    }
+
+    .slide.cover p {
+        font-size: 1.45rem;
+        color: #334155;
+        max-width: 840px;
+        line-height: 1.6;
+        font-weight: 500;
+    }
+
+    .slide-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 3px solid #0f172a;
+        padding-bottom: 12px;
+    }
+
+    .slide-header h3 {
+        font-size: 2.1rem;
+        color: #0f172a;
+        font-weight: 800;
+    }
+
+    .slide-number {
+        font-size: 1.15rem;
+        color: #ffffff;
+        font-weight: bold;
+        background: #0f172a;
+        padding: 6px 16px;
+        border-radius: 0px;
+    }
+
+    .slide-content {
+        flex: 1;
+        margin-top: 18px;
+        display: flex;
+        gap: 28px;
+        align-items: center;
+    }
+
+    .text-column {
+        flex: 1;
+        font-size: 1.35rem;
+        line-height: 1.6;
+        color: #0f172a;
+    }
+
+    .image-column {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #ffffff;
+        border: 3px solid #0f172a;
+        border-radius: 0px;
+        padding: 14px;
+        height: 100%;
+        max-height: 300px;
+    }
+
+    .image-column img {
+        max-width: 100%;
+        max-height: 210px;
+        border-radius: 0px;
+        object-fit: contain;
+    }
+
+    .image-caption {
+        font-size: 1.1rem;
+        color: #475569;
+        margin-top: 10px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .highlight-box {
+        background: #f8fafc;
+        border: 3px solid #0f172a;
+        border-left: 8px solid #0f172a;
+        padding: 16px 20px;
+        border-radius: 0px;
+        margin-top: 10px;
+        font-size: 1.25rem;
+        color: #0f172a;
+        line-height: 1.5;
+    }
+
+    ul, ol {
+        margin-left: 22px;
+        margin-top: 6px;
+    }
+
+    li {
+        margin-bottom: 8px;
+    }
+
+    strong {
+        color: #0f172a;
+    }
+
+    .slide-footer {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.1rem;
+        color: #475569;
+        border-top: 3px solid #0f172a;
+        padding-top: 12px;
+        font-weight: bold;
+    }
+
+    /* Botões de Navegação Quadrados */
+    .nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #ffffff;
+        border: 3px solid #0f172a;
+        color: #0f172a;
+        width: 56px;
+        height: 56px;
+        border-radius: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        font-size: 1.8rem;
+        user-select: none;
+        transition: all 0.2s ease;
+        z-index: 10;
+    }
+
+    .nav-btn:hover {
+        background: #0f172a;
+        color: #ffffff;
+    }
+
+    .prev-btn {
+        left: -80px;
+    }
+
+    .next-btn {
+        right: -80px;
+    }
+
+    /* Layout para Celular */
+    @media (max-width: 1100px) {
+        body {
+            padding: 20px 10px;
+            justify-content: flex-start;
+        }
+
+        .slider-container {
+            gap: 24px;
+        }
+
+        .slide {
+            display: flex !important;
+            height: auto;
+            aspect-ratio: auto;
+            min-height: 500px;
+            padding: 28px;
+        }
+
+        .nav-btn {
+            display: none !important;
+        }
+
+        .slide-content {
+            flex-direction: column;
+        }
+
+        .image-column {
+            width: 100%;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <div class="slider-container">
+        <!-- Botões de navegação no PC -->
+        <button class="nav-btn prev-btn" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="nav-btn next-btn" onclick="changeSlide(1)">&#10095;</button>
+
+        <!-- SLIDE 1 -->
+        <div class="slide cover active">
+            <h2>Apresentação Descomplicada e Explicativa</h2>
+            <h1>Niels Bohr e o Modelo Atômico</h1>
+            <p>Entenda o modelo atômico de Bohr, suas fórmulas, o alcance real da teoria, suas limitações e o impacto das suas descobertas sem complicação!</p>
+            <p> ㅤ</p>
+            <p> Gabriel M e Amanda.      ㅤN: 7,25 </p>
+        </div>
+
+        <!-- SLIDE 2 -->
+        <div class="slide cover">
+            <h2>Introdução Biográfica</h2>
+            <h1>Quem Foi Niels Bohr?</h1>
+            <p>Conheça o cientista dinamarquês que transformou o modo como a humanidade entende a matéria e a física do mundo microscópico.</p>
+        </div>
+
+        <!-- SLIDE 3 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Quem Foi Niels Bohr?</h3>
+                <span class="slide-number">Slide 03</span>
+            </div>
+            <div class="slide-content">
+                <div class="text-column">
+                    <p><strong>• Um Cientista Inspirado:</strong> Niels Bohr (1885–1962) nasceu na Dinamarca e cresceu em um ambiente cercado de ciência e debates intelectuais.</p>
+                    <br>
+                    <p><strong>• Parceria de Peso:</strong> Trabalhou na Inglaterra com dois gigantes da física: J.J. Thomson (descobridor do elétron) e Ernest Rutherford (que descobriu o núcleo do átomo).</p>
+                </div>
+                <div class="image-column">
+                    <img src="7119akYVyQL._AC_UF894,1000_QL80_.jpg" alt="Retrato de Niels Bohr">
+                    <div class="image-caption">Niels Bohr (1885–1962)</div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Trabalho de Física — Niels Bohr</span>
+                <span>Biografia</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 4 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>O Problema do Átomo Antigo</h3>
+                <span class="slide-number">Slide 04</span>
+            </div>
+            <div class="slide-content">
+                <div class="text-column">
+                    <p><strong>• O Modelo Planetário:</strong> Rutherford descobriu que o átomo parecia um mini sistema solar: um núcleo no centro com elétrons girando em volta.</p>
+                    <br>
+                    <p><strong>• A Grande Crise:</strong> Pela física tradicional, tudo que gira emitindo energia deveria perder força e cair no centro. O átomo "colapsaria" em instantes. Mas a matéria é estável! Por que os elétrons não caíam?</p>
+                </div>
+                <div class="image-column">
+                    <img src="7119akYVyQL._AC_UF894,1000_QL80_.jpg" alt="Retrato de Niels Bohr">
+                    <div class="image-caption">Niels Bohr em sua juventude</div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Trabalho de Física — Niels Bohr</span>
+                <span>O Problema do Átomo</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 5 -->
+        <div class="slide cover">
+            <h2>A Solução de Bohr (1913)</h2>
+            <h1>A Grande Sacada do Modelo Atômico</h1>
+            <p>Bohr juntou a física das partículas com a ideia de "pacotes de energia" (quanta) e resolveu o mistério da estabilidade dos átomos.</p>
+        </div>
+
+        <!-- SLIDE 6 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>A Ideia Principal de Bohr</h3>
+                <span class="slide-number">Slide 06</span>
+            </div>
+            <div class="slide-content">
+                <div class="text-column">
+                    <p><strong>• Órbitas Especiais (Pistas Fixas):</strong> Bohr propôs que os elétrons não podem girar em qualquer lugar. Eles giram em pistas circulares bem definidas (camadas de energia).</p>
+                    <br>
+                    <p><strong>• Regra de Ouro:</strong> Enquanto o elétron estiver na sua pista fixa, ele não perde energia nenhuma! Por isso o átomo não se destrói.</p>
+                </div>
+                <div class="image-column">
+                    <img src="modelo-atomico-bohr.jpg" alt="Modelo Atômico de Bohr">
+                    <div class="image-caption">Órbitas e Níveis de Energia (n=1, n=2, n=3)</div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Trabalho de Física — Niels Bohr</span>
+                <span>A Ideia de Bohr</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 7 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>O Salto Quântico: Como Funciona</h3>
+                <span class="slide-number">Slide 07</span>
+            </div>
+            <div class="slide-content">
+                <div class="text-column" style="flex: 2;">
+                    <p>Pense nas camadas de energia como os degraus de uma escada:</p>
+                    <div class="highlight-box">
+                        <ul>
+                            <li><strong>Subindo o degrau:</strong> Para subir de camada, o elétron absorve uma quantidade exata de energia (um fóton de luz).</li>
+                            <li><strong>Descendo o degrau:</strong> Ao voltar para a camada interna, o elétron libera essa mesma energia exata em forma de luz.</li>
+                            <li><strong>Sem meio termo:</strong> O elétron pula de um nível pro outro sem passar pelo espaço do meio! É o <em>salto quântico</em>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Trabalho de Física — Niels Bohr</span>
+                <span>O Salto Quântico</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 8 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Entendendo o Momento Angular</h3>
+                <span class="slide-number">Slide 08</span>
+            </div>
+            <div class="slide-content">
+                <div class="text-column" style="flex: 2;">
+                    <p>Fórmula de Bohr para o tamanho da órbita: <strong>L = m · v · r = n · (h / 2π)</strong></p>
+                    <div class="highlight-box">
+                        <ul>
+                            <li><strong>m · v · r (Lado Esquerdo):</strong> Massa, velocidade e distância do elétron. Mede o "giro" do elétron.</li>
+                            <li><strong>n (O Degrau):</strong> É o número da camada (1, 2, 3...). Nunca existem números quebrados como 1,5!</li>
+                            <li><strong>h e π (Constantes):</strong> <em>h</em> é a constante de Planck (o pacote de energia) e <em>π</em> é o pi da matemática.</li>
+                            <li><strong>Resumo:</strong> Prova que as órbitas são degraus inteiros, e não uma rampa.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Trabalho de Física — Niels Bohr</span>
+                <span>Fórmula Explicada (1)</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 9 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Entendendo o Salto de Energia</h3>
+                <span class="slide-number">Slide 09</span>
+            </div>
+            <div class="slide-content">
+                <div class="text-column" style="flex: 2;">
+                    <p>Fórmula do Salto de Energia: <strong>ΔE = E₂ - E₁ = h · f</strong></p>
+                    <div class="highlight-box">
+                        <ul>
+                            <li><strong>ΔE (Diferença de Energia):</strong> A energia que o elétron ganha ou solta ao pular.</li>
+                            <li><strong>E₂ - E₁:</strong> A energia da camada externa menos a da camada interna.</li>
+                            <li><strong>f (Frequência da Luz):</strong> A cor ou tipo de luz emitida (ex: luz vermelha, azul, raio UV).</li>
+                            <li><strong>Resumo:</strong> Quanto maior a distância do pulo, maior é a energia e mais viva é a cor emitida!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Trabalho de Física — Niels Bohr</span>
+                <span>Fórmula Explicada (2)</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 10 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Por que isso explica as Cores?</h3>
+                <span class="slide-number">Slide 10</span>
+            </div>
+            <div class="slide-content">
+                <div class="text-column" style="flex: 2;">
+                    <p><strong>• A Digital de Cada Elemento:</strong> Cada elemento químico tem camadas em distâncias diferentes. Quando aquecidos, seus elétrons dão saltos quânticos únicos.</p>
+                    <br>
+                    <div class="highlight-box">
+                        <strong>Exemplo Prático:</strong> É por causa dos saltos quânticos dos elétrons que os <strong>fogos de artifício</strong> têm cores diferentes! O sódio brilha amarelo, o estrôncio brilha vermelho e o cobre brilha azul.
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Trabalho de Física — Niels Bohr</span>
+                <span>Cores e Fogos de Artifício</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 11 -->
+        <div class="slide cover">
+            <h2>Análise Crítica e Alcance</h2>
+            <h1>O Modelo de Bohr Serve Para Todos os Átomos?</h1>
+            <p>Descubra em quais casos a teoria de Bohr funciona com perfeição e por que ela não é suficiente para a tabela periódica inteira.</p>
+        </div>
+
+        <!-- SLIDE 12 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>A Aplicação do Modelo: Hidrogênio</h3>
+                <span class="slide-number">Slide 12</span>
+            </div>
+            <div class="slide-content">
+                <div class="text-column" style="flex: 2;">
+                    <p><strong>• O Sucesso do Modelo:</strong> O modelo de Bohr foi criado especificamente e funciona perfeitamente para o **Átomo de Hidrogênio** (que possui apenas 1 elétron) e para íons de elétron único (como He⁺ ou Li²⁺).</p>
+                    <br>
+                    <div class="highlight-box">
+                        <strong>• O Motivo do Sucesso:</strong> Em sistemas de elétron único, só existe a atração entre o núcleo e esse único elétron. O cálculo matemático é simples, exato e sem interferências externas!
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Trabalho de Física — Niels Bohr</span>
+                <span>Alcance do Modelo</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 13 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>As Limitações: Átomos Polieletrônicos</h3>
+                <span class="slide-number">Slide 13</span>
+            </div>
+            <div class="slide-content">
+                <div class="text-column" style="flex: 2;">
+                    <p><strong>• Por que NÃO serve para todos os átomos?</strong></p>
+                    <div class="highlight-box">
+                        <ul>
+                            <li><strong>Repulsão Eletrônica:</strong> Átomos com 2 ou mais elétrons sofrem atritos e repulsões entre si. O modelo de Bohr não consegue calcular esse "caos" de múltiplos elétrons.</li>
+                            <li><strong>Órbitas Não-Circulares:</strong> Elementos mais pesados possuem subníveis energéticos e órbitas elípticas complexas.</li>
+                            <li><strong>Luz Dividida (Efeito Zeeman):</strong> Em campos magnéticos, as luzes emitidas se dividem em várias sublinhas que Bohr não conseguia explicar.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Trabalho de Física — Niels Bohr</span>
+                <span>Limitações do Modelo</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 14 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Do Modelo de Bohr ao Modelo Atual</h3>
+                <span class="slide-number">Slide 14</span>
+            </div>
+            <div class="slide-content">
+                <div class="text-column" style="flex: 2;">
+                    <p><strong>• A Evolução Necessária:</strong> As limitações do modelo de Bohr levaram os cientistas a desenvolver a **Mecânica Quântica Moderna**.</p>
+                    <br>
+                    <div class="highlight-box">
+                        <ul>
+                            <li><strong>Princípio da Incerteza (Heisenberg):</strong> Provou ser impossível saber a posição exata e a velocidade do elétron ao mesmo tempo.</li>
+                            <li><strong>De Órbita para Orbital:</strong> Hoje não dizemos que o elétron gira em uma "pista circular fixa", mas sim que ele fica em uma <strong>Nuvem Eletrônica (Orbital)</strong> — uma região de alta probabilidade!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Trabalho de Física — Niels Bohr</span>
+                <span>Evolução da Física</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 15 -->
+        <div class="slide cover">
+            <h2>Outras Grandes Descobertas de Bohr</h2>
+            <h1>Além do Modelo Atômico</h1>
+            <p>Descubra como Bohr ajudou a explicar a dualidade da matéria, a física das estrelas e a divisão do átomo (fissão nuclear).</p>
+        </div>
+
+        <!-- SLIDE 16 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>O Princípio da Correspondência</h3>
+                <span class="slide-number">Slide 16</span>
+            </div>
+            <div class="slide-content">
+                <div class="text-column" style="flex: 2;">
+                    <p><strong>• Conectando o Micro e o Macro:</strong> Bohr explicou que a física quântica (dos átomos) não anula a física comum de Newton (das coisas grandes).</p>
+                    <br>
+                    <div class="highlight-box">
+                        <strong>A Regra:</strong> Quando pensamos em coisas grandes ou em órbitas gigantescas, as regras quânticas se transformam exatamente nas mesmas regras da física clássica. Tudo se conecta perfeitamente!
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Trabalho de Física — Niels Bohr</span>
+                <span>Correspondência</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 17 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Princípio da Complementaridade (1927)</h3>
+                <span class="slide-number">Slide 17</span>
+            </div>
+            <div class="slide-content">
+                <div class="text-column" style="display: flex; flex-direction: column; gap: 24px;">
+                    <div class="highlight-box" style="margin-top: 0;">
+                        <strong>• Onda e Partícula ao mesmo tempo:</strong> Bohr mostrou que os elétrons e a luz podem se comportar como uma "bolinha" (partícula) ou como uma "onda", dependendo do teste.
+                    </div>
+                    <div class="highlight-box" style="margin-top: 0;">
+                        <strong>• Duas Faces da Moeda:</strong> Nenhum experimento vê o lado onda e o lado partícula ao mesmo tempo. Mas você precisa dos dois conceitos para entender a realidade completa.
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Trabalho de Física — Niels Bohr</span>
+                <span>Complementaridade</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 18 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Física Nuclear: A Gota Líquida</h3>
+                <span class="slide-number">Slide 18</span>
+            </div>
+            <div class="slide-content">
+                <div class="text-column" style="flex: 2;">
+                    <p><strong>• O Núcleo do Átomo (1936):</strong> Bohr percebeu que o centro do átomo (núcleo) não era um bloco duro. Ele propôs que o núcleo se comporta como uma <strong>gota de água muito densa</strong>.</p>
+                    <br>
+                    <p><strong>• Como a Gota se Divide:</strong> Quando o núcleo absorve um nêutron, a "gota" vibra, estica e se divide em duas partes menores.</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Trabalho de Física — Niels Bohr</span>
+                <span>Modelo da Gota Líquida</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 19 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Teoria da Fissão Nuclear (1939)</h3>
+                <span class="slide-number">Slide 19</span>
+            </div>
+            <div class="slide-content">
+                <div class="text-column" style="flex: 2;">
+                    <p><strong>• A Quebra do Átomo:</strong> Junto com John Wheeler, Bohr explicou como a divisão (fissão) do elemento <strong>Urânio-235</strong> libera uma quantidade enorme de energia.</p>
+                    <br>
+                    <div class="highlight-box">
+                        <strong>O Impacto no Mundo:</strong> Essa descoberta permitiu a criação das usinas nucleares (energia limpa e potente) e também das armas atômicas.
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Trabalho de Física — Niels Bohr</span>
+                <span>Fissão Nuclear</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 20 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Debates entre Bohr e Einstein</h3>
+                <span class="slide-number">Slide 20</span>
+            </div>
+            <div class="slide-content">
+                <div class="text-column">
+                    <p><strong>• A Discórdia:</strong> Albert Einstein não gostava da ideia do mundo atômico funcionar por probabilidades ("Deus não joga dados com o universo").</p>
+                    <br>
+                    <p><strong>• A Resposta de Bohr:</strong> Bohr defendeu firmemente a física quântica provando que no mundo microscópico as coisas funcionam sim de forma probabilística.</p>
+                </div>
+                <div class="image-column">
+                    <img src="images.jpg" alt="Niels Bohr Institutet">
+                    <div class="image-caption">Instituto Niels Bohr em Copenhague</div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Trabalho de Física — Niels Bohr</span>
+                <span>Bohr vs. Einstein</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 21 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Uso das Descobertas Hoje</h3>
+                <span class="slide-number">Slide 21</span>
+            </div>
+            <div class="slide-content">
+                <div class="text-column" style="flex: 2;">
+                    <div class="highlight-box">
+                        <ul>
+                            <li><strong>Luzes de LASER:</strong> Funcionam com saltos quânticos estimulados.</li>
+                            <li><strong>Telas e Eletrônicos:</strong> Chips de celular e computador usam o controle dos elétrons.</li>
+                            <li><strong>Luz de Neon e LED:</strong> O brilho das lâmpadas vem dos elétrons voltando para suas camadas.</li>
+                            <li><strong>Exames Médicos:</strong> A ressonância magnética depende da física quântica e nuclear.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Trabalho de Física — Niels Bohr</span>
+                <span>Aplicações Práticas</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 22 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Resumo Geral e Conclusão</h3>
+                <span class="slide-number">Slide 22</span>
+            </div>
+            <div class="slide-content">
+                <div class="text-column" style="flex: 2;">
+                    <div class="highlight-box">
+                        <strong>O Legado de Niels Bohr:</strong><br><br>
+                        Bohr salvou a física atômica ao introduzir a quantização das órbitas. Embora seu modelo servisse apenas para o hidrogênio, a sua falha em átomos maiores serviu de trampolim para a criação da física quântica e nuclear moderna!
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Trabalho de Física — Niels Bohr</span>
+                <span>Conclusão</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 23 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Fontes e Referências</h3>
+                <span class="slide-number">Slide 23</span>
+            </div>
+            <div class="slide-content">
+                <div class="text-column">
+                    <ul style="margin-top: 12px;">
+                        <li>Bohr, N. (1913). <em>Sobre a Constituição de Átomos e Moléculas</em>.</li>
+                        <li>Pais, A. (1991). <em>Niels Bohr's Times: In Physics, Philosophy, and Polity</em>.</li>
+                        <li>Eisberg, R., & Resnick, R. <em>Física Quântica: Átomos, Moléculas e Núcleos</em>.</li>
+                        <li>Fundação Nobel: <em>Prêmio Nobel de Física de 1922 (Niels Bohr)</em>.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Trabalho de Física — Niels Bohr</span>
+                <span>Referências</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(index) {
+            if (window.innerWidth > 1100) {
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    if (i === index) {
+                        slide.classList.add('active');
+                    }
+                });
+            }
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) {
+                currentSlide = slides.length - 1;
+            } else if (currentSlide >= slides.length) {
+                currentSlide = 0;
+            }
+            showSlide(currentSlide);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                changeSlide(1);
+            } else if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1100) {
+                showSlide(currentSlide);
+            }
+        });
+    </script>
+</body>
+</html>
